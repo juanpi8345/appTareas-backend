@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TareaRepository extends JpaRepository<Tarea,Long> {
-   Page<Tarea> findAllByUsuarioId(Long usuarioId, Pageable pageable);
+   Page<Tarea> findAllByUsuarioUsuarioId(Long usuarioId, Pageable pageable);
 }
