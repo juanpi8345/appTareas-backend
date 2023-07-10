@@ -1,6 +1,7 @@
 
 package com.api.tareas.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -48,6 +49,7 @@ public class Usuario {
     private String password;
    
    @OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL)
+   @JsonIgnore
    private Set<Tarea> tareas = new HashSet<>();
    
    

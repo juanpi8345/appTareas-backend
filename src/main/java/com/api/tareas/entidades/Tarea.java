@@ -1,6 +1,7 @@
 
 package com.api.tareas.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,6 +16,7 @@ import jakarta.persistence.TemporalType;
 import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Getter @Setter
@@ -43,7 +45,8 @@ public class Tarea {
     @Column(unique = true, nullable = false)
     private String descripcion;
     
-    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
     @Column(name = "fecha_caducidad")
     private Date fechaCaducidad;
     
@@ -52,6 +55,7 @@ public class Tarea {
     
     @ManyToOne()
     @JoinColumn(name="usuario_id")
+    @JsonIgnore
     private Usuario usuario;
 
 }

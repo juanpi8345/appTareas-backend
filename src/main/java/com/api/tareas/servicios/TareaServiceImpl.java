@@ -37,15 +37,12 @@ public class TareaServiceImpl implements TareaService {
 
     @Override
     public void eliminarTarea(Long tareaId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+         tareaRepository.deleteById(tareaId);
     }
 
     @Override
     public Tarea guardarTarea(Tarea tarea) {
-        if(tareaRepository.findById(tarea.getTareaId()) == null)
-             return tareaRepository.save(tarea);
-    
-       return null;
+        return tareaRepository.save(tarea);
     }
     
 }
