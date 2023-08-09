@@ -38,20 +38,23 @@ public class Tarea {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tareaId;
     
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String titulo;
    
     @Lob
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String descripcion;
     
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Temporal(TemporalType.DATE)
     @Column(name = "fecha_caducidad")
     private Date fechaCaducidad;
     
     @Column(nullable = false)
     private boolean completada = false;
+    
+     @Column(nullable = false)
+    private boolean caducada = false;
     
     @ManyToOne()
     @JoinColumn(name="usuario_id")

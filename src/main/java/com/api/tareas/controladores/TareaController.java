@@ -36,7 +36,7 @@ public class TareaController {
                                                                                                     @RequestParam(defaultValue = "0") int page,
                                                                                                     @RequestParam(defaultValue = "10") int size){
         Pageable pageable = PageRequest.of(page, size);
-        return  ResponseEntity.ok(tareaService.obtenerTareasPorUsuarioId(usuarioId, pageable));
+        return  ResponseEntity.ok(tareaService.obtenerTareasPendientesPorUsuarioId(usuarioId, pageable));
     }
     
     @PostMapping("/usuario/{usuarioId}")
@@ -46,6 +46,7 @@ public class TareaController {
             usuario.getTareas().add(tarea);
             tarea.setUsuario(usuario);
             tareaService.guardarTarea(tarea);
+            System.out.println(tarea.getFechaCaducidad());
             return ResponseEntity.ok(tarea);
         }
         return ResponseEntity.notFound().build();

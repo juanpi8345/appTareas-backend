@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface TareaService {
     
-    Page<Tarea> obtenerTareasPorUsuarioId(Long usuarioId, Pageable pageable);
+    Page<Tarea> obtenerTareasPendientesPorUsuarioId(Long usuarioId, Pageable pageable);
     Tarea obtenerTareaPorId(Long tareaId);
     Tarea actualizarTarea(Tarea tarea);
     Tarea guardarTarea(Tarea tarea);

@@ -15,8 +15,8 @@ public class TareaServiceImpl implements TareaService {
     private TareaRepository tareaRepository;
 
     @Override
-    public Page<Tarea> obtenerTareasPorUsuarioId(Long usuarioId,Pageable pageable) {
-       return tareaRepository.findAllByUsuarioUsuarioId(usuarioId, pageable);
+    public Page<Tarea> obtenerTareasPendientesPorUsuarioId(Long usuarioId,Pageable pageable) {
+       return tareaRepository.findAllByUsuarioUsuarioIdAndCompletadaFalse(usuarioId, pageable);
     }
 
     @Override
