@@ -4,10 +4,13 @@ import com.api.tareas.entidades.Tarea;
 import com.api.tareas.entidades.Usuario;
 import com.api.tareas.servicios.TareaService;
 import com.api.tareas.servicios.UsuarioService;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,8 +37,11 @@ public class TareaController {
     @GetMapping("/usuario/{usuarioId}")
     public ResponseEntity<Page<Tarea>> obtenerTareasPorUsuario(@PathVariable Long usuarioId, 
                                                                                                     @RequestParam(defaultValue = "0") int page,
-                                                                                                    @RequestParam(defaultValue = "10") int size){
-        Pageable pageable = PageRequest.of(page, size);
+                                                                                                    @RequestParam(defaultValue = "4") int size,
+                                                                                                    @RequestParam(defaultValue= "fechaCaducidad")String orderBy){
+        Sort sort = Sort.by(orderBy);
+        
+        Pageable pageable = PageRequest.of(page, size,sort);
         return  ResponseEntity.ok(tareaService.obtenerTareasPendientesPorUsuarioId(usuarioId, pageable));
     }
     

@@ -1,6 +1,6 @@
-
 package com.api.tareas.entidades;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,20 +13,20 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import java.util.Date;
+import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @Table(name = "tareas")
 public class Tarea {
 
     public Tarea() {
     }
 
-    public Tarea(Long tareaId, String titulo, String descripcion, Date fechaCaducidad) {
+    public Tarea(Long tareaId, String titulo, String descripcion, LocalDate fechaCaducidad) {
         this.tareaId = tareaId;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -37,27 +37,26 @@ public class Tarea {
     @Column(name = "tarea_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tareaId;
-    
+
     @Column(nullable = false)
     private String titulo;
-   
+
     @Lob
     @Column(nullable = false)
     private String descripcion;
-    
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+
     @Temporal(TemporalType.DATE)
     @Column(name = "fecha_caducidad")
-    private Date fechaCaducidad;
-    
+    private LocalDate fechaCaducidad;
+
     @Column(nullable = false)
     private boolean completada = false;
-    
-     @Column(nullable = false)
+
+    @Column(nullable = false)
     private boolean caducada = false;
-    
+
     @ManyToOne()
-    @JoinColumn(name="usuario_id")
+    @JoinColumn(name = "usuario_id")
     @JsonIgnore
     private Usuario usuario;
 
