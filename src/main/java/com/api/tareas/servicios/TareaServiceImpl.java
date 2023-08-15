@@ -3,6 +3,8 @@ package com.api.tareas.servicios;
 
 import com.api.tareas.entidades.Tarea;
 import com.api.tareas.repositorios.TareaRepository;
+import java.time.LocalDate;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +18,7 @@ public class TareaServiceImpl implements TareaService {
 
     @Override
     public Page<Tarea> obtenerTareasPendientesPorUsuarioId(Long usuarioId,Pageable pageable) {
-       return tareaRepository.findAllByUsuarioUsuarioIdAndCompletadaFalse(usuarioId, pageable);
+       return tareaRepository.findAllByUsuarioUsuarioIdAndCompletadaFalseAndCaducadaFalse(usuarioId, pageable);
     }
 
     @Override
@@ -48,6 +50,44 @@ public class TareaServiceImpl implements TareaService {
     @Override
     public Page<Tarea> obtenerTareasCompletadasPorUsuarioId(Long usuarioId, Pageable pageable) {
         return tareaRepository.findAllByUsuarioUsuarioIdAndCompletadaTrue(usuarioId, pageable);
+    }
+
+    @Override
+    public void marcarComoCaducadaSiEsNecesario() {
+        List<Tarea> tareas = tareaRepository.findAll();
+        
+       LocalDate currentDate = LocalDate.now();
+        for(Tarea tarea : tareas){
+            if(!tarea.isCaducada() && tarea.getFechaCaducidad().isBefore(currentDate)){
+                tarea.setCaducada(true);
+                tareaRepository.save(tarea);
+            }
+        }
+    }
+
+    @Override
+    public Page<Tarea> obtenerTareasCaducadasPorUsuarioId(Long usuarioId, Pageable pageable) {
+      return tareaRepository.findAllByUsuarioUsuarioIdAndCompletadaFalseAndCaducadaTrue(usuarioId, pageable);
+    }
+
+    @Override
+    public List<Tarea> obtenerTareasCompletadasPorUsuarioId(Long usuarioId) {
+         return tareaRepository.findAllByUsuarioUsuarioIdAndCompletadaTrue(usuarioId);
+    }
+
+    @Override
+    public void eliminarTareas(List<Tarea> tareas) {
+        tareaRepository.deleteAll(tareas);
+    }
+
+    @Override
+    public List<Tarea> obtenerTareasCaducadasPorUsuarioId(Long usuarioId) {
+       return tareaRepository.findAllByUsuarioUsuarioIdAndCompletadaFalseAndCaducadaTrue(usuarioId);
+    }
+
+    @Override
+    public List<Tarea> obtenerTareasPendientesPorUsuarioId(Long usuarioId) {
+       return tareaRepository.findAllByUsuarioUsuarioIdAndCompletadaFalseAndCaducadaFalse(usuarioId);
     }
     
 }
