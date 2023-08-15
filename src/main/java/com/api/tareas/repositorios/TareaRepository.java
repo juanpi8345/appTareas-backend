@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TareaRepository extends JpaRepository<Tarea,Long> {
    Page<Tarea> findAllByUsuarioUsuarioIdAndCompletadaFalse(Long usuarioId, Pageable pageable);
+   Page<Tarea> findAllByUsuarioUsuarioIdAndCompletadaTrue(Long usuarioId, Pageable pageable);
 }

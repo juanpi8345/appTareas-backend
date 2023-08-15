@@ -28,7 +28,7 @@ public class TareaServiceImpl implements TareaService {
     public Tarea actualizarTarea(Tarea tareaRequest) {
         return tareaRepository.findById(tareaRequest.getTareaId()).map((Tarea tarea) ->{
             tarea.setTitulo(tareaRequest.getTitulo());
-            tarea.setCompletada(tareaRequest.isCompletada());
+            tarea.setCompletada(true);
             tarea.setDescripcion(tareaRequest.getDescripcion());
             tarea.setFechaCaducidad(tareaRequest.getFechaCaducidad());
             return tareaRepository.save(tarea);
@@ -43,6 +43,11 @@ public class TareaServiceImpl implements TareaService {
     @Override
     public Tarea guardarTarea(Tarea tarea) {
         return tareaRepository.save(tarea);
+    }
+
+    @Override
+    public Page<Tarea> obtenerTareasCompletadasPorUsuarioId(Long usuarioId, Pageable pageable) {
+        return tareaRepository.findAllByUsuarioUsuarioIdAndCompletadaTrue(usuarioId, pageable);
     }
     
 }

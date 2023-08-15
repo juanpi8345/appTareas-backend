@@ -35,7 +35,7 @@ public class TareaController {
     private TareaService tareaService;
     
     @GetMapping("/usuario/{usuarioId}")
-    public ResponseEntity<Page<Tarea>> obtenerTareasPorUsuario(@PathVariable Long usuarioId, 
+    public ResponseEntity<Page<Tarea>> obtenerTareasPendientesPorUsuario(@PathVariable Long usuarioId, 
                                                                                                     @RequestParam(defaultValue = "0") int page,
                                                                                                     @RequestParam(defaultValue = "4") int size,
                                                                                                     @RequestParam(defaultValue= "fechaCaducidad")String orderBy){
@@ -44,6 +44,19 @@ public class TareaController {
         Pageable pageable = PageRequest.of(page, size,sort);
         return  ResponseEntity.ok(tareaService.obtenerTareasPendientesPorUsuarioId(usuarioId, pageable));
     }
+    
+    
+    @GetMapping("/completadas/usuario/{usuarioId}")
+    public ResponseEntity<Page<Tarea>> obtenerTareasCompletadasPorUsuario(@PathVariable Long usuarioId, 
+                                                                                                    @RequestParam(defaultValue = "0") int page,
+                                                                                                    @RequestParam(defaultValue = "4") int size,
+                                                                                                    @RequestParam(defaultValue= "fechaCaducidad")String orderBy){
+        Sort sort = Sort.by(orderBy);
+        
+        Pageable pageable = PageRequest.of(page, size,sort);
+        return  ResponseEntity.ok(tareaService.obtenerTareasCompletadasPorUsuarioId(usuarioId, pageable));
+    }
+    
     
     @PostMapping("/usuario/{usuarioId}")
     public ResponseEntity<Tarea> agregarTarea(@PathVariable Long usuarioId, @RequestBody Tarea tarea){
@@ -59,12 +72,9 @@ public class TareaController {
     }
     
     @PutMapping("/")
-    public ResponseEntity<Tarea> actualizarTarea(@RequestBody Tarea tarea){
-       Tarea tareaEditar = tareaService.actualizarTarea(tarea);
-       if(tareaEditar != null){
-           return ResponseEntity.ok(tareaEditar);
-       }
-       return ResponseEntity.notFound().build();
+    public ResponseEntity<Tarea> marcarCompletada(@RequestBody Tarea tarea){
+        tareaService.actualizarTarea(tarea);
+        return ResponseEntity.ok(tarea);
     }
     
     @DeleteMapping("/tarea/{tareaId}")
