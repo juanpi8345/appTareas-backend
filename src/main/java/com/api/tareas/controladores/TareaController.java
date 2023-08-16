@@ -36,7 +36,7 @@ public class TareaController {
     @GetMapping("/usuario/{usuarioId}")
     public ResponseEntity<Page<Tarea>> obtenerTareasPendientesPorUsuario(@PathVariable Long usuarioId,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "4") int size,
+            @RequestParam(defaultValue = "3") int size,
             @RequestParam(defaultValue = "fechaCaducidad") String orderBy) {
         Sort sort = Sort.by(orderBy);
 
@@ -47,7 +47,7 @@ public class TareaController {
     @GetMapping("/completadas/usuario/{usuarioId}")
     public ResponseEntity<Page<Tarea>> obtenerTareasCompletadasPorUsuario(@PathVariable Long usuarioId,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "4") int size,
+            @RequestParam(defaultValue = "3") int size,
             @RequestParam(defaultValue = "fechaCaducidad") String orderBy) {
         Sort sort = Sort.by(orderBy);
 
@@ -58,7 +58,7 @@ public class TareaController {
     @GetMapping("/caducadas/usuario/{usuarioId}")
     public ResponseEntity<Page<Tarea>> obtenerTareasCaducadasPorUsuario(@PathVariable Long usuarioId,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "4") int size,
+            @RequestParam(defaultValue = "3") int size,
             @RequestParam(defaultValue = "fechaCaducidad") String orderBy) {
         Sort sort = Sort.by(orderBy);
 
